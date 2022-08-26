@@ -26,8 +26,8 @@ public class HotelService {
     }
 
     public Flux<Client> getAllClientsBackPresure(int limitRequest){
-        Flux<Client> bookFlux = hotelRepository.findAll().delayElements(Duration.ofSeconds(1)).log();
-        return bookFlux.limitRate(limitRequest);
+        Flux<Client> clientFlux = hotelRepository.findAll().delayElements(Duration.ofSeconds(1)).log();
+        return clientFlux.limitRate(limitRequest);
     }
 
     public Mono<Client> findById(String id){

@@ -1,15 +1,11 @@
 package com.sofka.javareactivo.models;
 
 import lombok.Data;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Date;
 
 @Data
@@ -18,12 +14,11 @@ public class Client {
     @Id
     private String id;
 
-    @NotBlank
-    @Size(min=5, max = 10)
+    @Size(min=2, max = 50)
     private String name;
 
     @NotBlank
-    @Size(min=3, max = 16)
+    @Size(min=2, max = 16)
     private String surName;
 
     @NotBlank
@@ -35,7 +30,7 @@ public class Client {
     private String document;
 
     @NotBlank
-    @Size(min=6, max = 22)
+    @Size(min=5, max = 22)
     private String email;
 
     @NotBlank

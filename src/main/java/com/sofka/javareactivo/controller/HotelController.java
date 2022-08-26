@@ -41,12 +41,12 @@ public class HotelController {
     }
 
     @PostMapping("/")
-    public Mono<Client> postClient(@RequestBody Client client) {
+    public Mono<Client> postClient(@Valid @RequestBody Client client) {
         return hotelService.postClient(client).log();
     }
 
     @PutMapping("/{id}")
-    public Mono<ResponseEntity<Client>>  updateClient(@PathVariable String id , @RequestBody Client client) {
+    public Mono<ResponseEntity<Client>>  updateClient(@Valid @PathVariable String id , @RequestBody Client client) {
         return hotelService.updateClient(id, client);
 
     }
