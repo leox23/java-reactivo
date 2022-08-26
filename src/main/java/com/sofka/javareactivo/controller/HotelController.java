@@ -41,17 +41,17 @@ public class HotelController {
     }
 
     @PostMapping("/")
-    public Mono<Client> postBook(@RequestBody @Valid Client client) {
+    public Mono<Client> postClient(@RequestBody Client client) {
         return hotelService.postClient(client).log();
     }
 
     @PutMapping("/{id}")
-    public Mono<ResponseEntity<Client>>  updateBook(@PathVariable @Valid String id , @RequestBody Client client) {
+    public Mono<ResponseEntity<Client>>  updateClient(@PathVariable String id , @RequestBody Client client) {
         return hotelService.updateClient(id, client);
 
     }
     @DeleteMapping("/{id}")
-    public Mono<ResponseEntity<Void>> deleteBookById(@PathVariable String id){
+    public Mono<ResponseEntity<Void>> deleteClientById(@PathVariable String id){
         return hotelService.deleteClient(id)
                 .map( r -> ResponseEntity.ok().<Void>build())
                 .defaultIfEmpty(ResponseEntity.notFound().build());
