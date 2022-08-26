@@ -20,7 +20,7 @@ import javax.validation.Valid;
 import java.time.Duration;
 
 @RestController
-@RequestMapping("/reactive/api/clients")
+@RequestMapping("clients")
 public class HotelController {
     private final HotelService hotelService;
 
