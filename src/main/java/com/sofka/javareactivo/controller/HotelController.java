@@ -2,7 +2,13 @@ package com.sofka.javareactivo.controller;
 
 import com.sofka.javareactivo.models.Client;
 import com.sofka.javareactivo.services.HotelService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mapping.PersistentPropertyAccessor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,7 +35,12 @@ public class HotelController {
         this.hotelService = bookService;
     }
 
-
+    @Operation(summary = "Obtener todos los clientes guardados.")
+    @ApiResponses(value = {
+            @ApiResponse( responseCode = "200", description = "Cliente guardado.",
+            content = { @Content(mediaType = "application/json",
+            schema = @Schema(implementation = Client.class))})
+    })
     @GetMapping(value = "/", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Client> getAllClients(){
         return hotelService.getAllClients().delayElements(Duration.ofSeconds(1));
