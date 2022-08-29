@@ -35,9 +35,10 @@ public class HotelController {
         this.hotelService = bookService;
     }
 
-    @Operation(summary = "Obtener todos los clientes guardados.")
+    //documentar mensajes de respuesta de http
+    @Operation(summary = "Obtener todos los clientes guardados. Usar mejor en Postman, o directamente (Aqui en Swagger genera error porque la peticion esta contruida con (.delayElements(Duration.ofSeconds(1)) y parece no se compatible con Swagger")
     @ApiResponses(value = {
-            @ApiResponse( responseCode = "200", description = "Cliente guardado.",
+            @ApiResponse( responseCode = "200", description = "Clientes Obtenidos.",
             content = { @Content(mediaType = "application/json",
             schema = @Schema(implementation = Client.class))})
     })
@@ -46,21 +47,47 @@ public class HotelController {
         return hotelService.getAllClients().delayElements(Duration.ofSeconds(1));
     }
 
+    @Operation(summary = "Para obtener un Cliente a travez del ID exacto. (ID requerido)")
+    @ApiResponses(value = {
+            @ApiResponse( responseCode = "200", description = "Client Obtenido.",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Client.class))})
+    })
     @GetMapping("/{id}")
     public Mono<Client> findById(@PathVariable String id){
         return hotelService.findById(id);
     }
 
+    @Operation(summary = "Agregar nuevo cliente. (Body requerido)")
+    @ApiResponses(value = {
+            @ApiResponse( responseCode = "200", description = "Cliente agregado.",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Client.class))})
+    })
     @PostMapping("/")
     public Mono<Client> postClient(@Valid @RequestBody Client client) {
         return hotelService.postClient(client).log();
     }
 
+    @Operation(summary = "Para actualizar datos cliente. (ID cliente y Body con los datos a actualizar son requeridos)")
+    @ApiResponses(value = {
+            @ApiResponse( responseCode = "200", description = "Datos cliente actualizados.",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Client.class))})
+    })
     @PutMapping("/{id}")
     public Mono<ResponseEntity<Client>>  updateClient(@Valid @PathVariable String id , @RequestBody Client client) {
         return hotelService.updateClient(id, client);
 
     }
+
+
+    @Operation(summary = "Para borrar cliente (no reversible). (ID Cliente requerido)")
+    @ApiResponses(value = {
+            @ApiResponse( responseCode = "200", description = "Cliente borrado.",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Client.class))})
+    })
     @DeleteMapping("/{id}")
     public Mono<ResponseEntity<Void>> deleteClientById(@PathVariable String id){
         return hotelService.deleteClient(id)
